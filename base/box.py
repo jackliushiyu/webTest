@@ -20,6 +20,7 @@ class Base:
         """
 
         # push test
+        # push all
         if browser == 'chrome' or browser == 'c':
             self.__driver = webdriver.Chrome()
         elif browser == 'firefox' or browser == 'f':
