@@ -18,6 +18,8 @@ class Base:
         传入一个浏览器类型，实例化一个浏览器对象
         :param browser: 形如 c
         """
+
+        # push test
         if browser == 'chrome' or browser == 'c':
             self.__driver = webdriver.Chrome()
         elif browser == 'firefox' or browser == 'f':
