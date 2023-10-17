@@ -186,12 +186,12 @@ class Base:
 
     def save_screen_shot(self, name):
         cmd = 'echo %homepath%'
-        dir = [i for i in os.popen(cmd)][0]
-        path = '%s\\Pictures\\%s.png' % (dir.strip(), name)
+        dir_name = [i for i in os.popen(cmd)][0]
+        path = '%s\\Pictures\\%s.png' % (dir_name.strip(), name)
         print(path)
         self.__driver.save_screenshot(path)
 
-    def excute_js(self, code):
+    def execute_js(self, code):
         """
         执行js代码
         :param code:
@@ -212,19 +212,19 @@ class CsvHelp:
         file = open(file_path, mode=mode, encoding=encoding)
         csv_data = csv.reader(file)
         flag = True
-        l = []
+        res = []
         for i in csv_data:
             if flag:
                 flag = False
                 continue
-            l.append(tuple(i))
+            res.append(tuple(i))
         file.close()
-        return l
+        return res
 
 
 class BasePage:
-    def __init__(self, driver: Base):
-        self.driver = driver
+    def __init__(self, driver_obj: Base):
+        self.driver = driver_obj
 
 
 class MySqlHelp:
@@ -232,17 +232,19 @@ class MySqlHelp:
         self.db = pymysql.connect(host=host, user=user, password=password, port=port)
 
     def get_data(self, sql):
-        l = []
+        res = []
         cursor = self.db.cursor()
         cursor.execute(sql)
         data = cursor.fetchall()
         for i in data:
-            l.append(tuple(i))
+            res.append(tuple(i))
         cursor.close()
         cursor.close()
         self.db.close()
-        return l
+        return res
+
+
 if __name__ == '__main__':
     driver = Base('c')
-    driver.open_url('https://www.baidu.com/s?tn=baidutop10&wd=%E5%8F%88%E4%B8%80%E9%A2%97%E5%B0%8F%E8%A1%8C%E6%98%9F%E4%BB%A5%E4%B8%AD%E5%9B%BD%E7%A7%91%E5%AD%A6%E5%AE%B6%E5%91%BD%E5%90%8D&rsv_idx=2&usm=1&ie=utf-8&rsv_cq=%E6%9C%AA%E7%BB%8F%E7%94%A8%E6%88%B7%E5%90%8C%E6%84%8F%E4%B8%8D%E5%BE%97%E5%8F%91%E9%80%81%E5%95%86%E4%B8%9A%E6%80%A7%E7%9F%AD%E4%BF%A1%E6%81%AF&rsv_dl=0_right_fyb_pchot_20811_01&rsf=a26304594524252d7524cd9865905531_1_15_9&rqid=9afad9680000603b')
-    driver.excute_js('window.scrollBy(0,2000)')
+    driver.open_url('https://www.baidu.com/')
+    driver.execute_js('window.scrollBy(0,2000)')
